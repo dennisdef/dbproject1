@@ -5,7 +5,8 @@ from dbproject import db, app
 
 @app.route("/")
 def index():
-    return render_template('index.html')
+    return render_template('index.html',
+            pageTitle = "Home")
     ## cur = db.connection.cursor()
     ##cur.execute("select r_id, first_name, last_name from researcher ")
     ##column_names = [i[0] for i in cur.description]
@@ -20,11 +21,11 @@ def executives():
         "select e.name,p.amount from executive e inner join project p on p.ex_id = e.ex_id order by p.amount desc limit 5")
     column_names = [i[0] for i in cur.description]
     res = [dict(zip(column_names, entry)) for entry in cur.fetchall()]
-    cur.close()
+    cur.close() 
     return render_template('ex.html',
-                           executives=res
+                        pageTitle = "Executives",
+                        executives=res
                            )
-
 
 @app.route("/under_40")
 def under_40():
@@ -34,5 +35,8 @@ def under_40():
     res = [dict(zip(column_names, entry)) for entry in cur.fetchall()]
     cur.close()
     return render_template('under_40.html',
-                           researchers=res
-                           )
+                        pageTitle = "Researchers under 40",
+                        researchers=res
+                        )
+
+                        

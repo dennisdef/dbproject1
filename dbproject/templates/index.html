@@ -1,21 +1,4 @@
 {% extends "base.html" %}
 {% block content %}
-    <table class = "table">
-        <tr>
-            <th>ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-        </tr>
-        {% for name in names %}
-        <tr>
-            <td>{{name.r_id}}</td>
-            <td>
-                {{name.first_name}}
-            </td>
-            <td>
-                {{name.last_name}}
-            </td>
-        </tr>
-        {%endfor%}
-    </table>
+    
 {% endblock content %}

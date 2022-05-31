@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<table class = "table">
+    <tr>
+        <th>Name</th>
+        <th>Amount</th>
+    </tr>
+    {% for ex in executives %}
+    <tr>
+        <td>{{ex.name}}</td>
+        <td>
+            {{ex.amount}}
+        </td>
+    </tr>
+    {%endfor%}
+</table>
+{% endblock content %}

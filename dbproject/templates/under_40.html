@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<table class = "table">
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Number of projects</th>
+    </tr>
+    {% for r in researchers %}
+    <tr>
+        <td>{{r.first_name}}</td>
+        <td>
+            {{r.last_name}}
+        </td>
+        <td>{{r.r_number}}</td>
+    </tr>
+    {%endfor%}
+</table>
+{% endblock content %}

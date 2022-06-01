@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{pageTitle}}
+{% endblock title %}
+
+{% block content %}
+
+<ul>
+    {% for sf in sfs%}
+    <li><a href="/categories/{{sf.en_name}}">{{sf.name}}</a>
+    {%endfor%}
+</ul>
+
+{% endblock content %}

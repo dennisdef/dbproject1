@@ -257,10 +257,10 @@ insert into project (project_id, start_date, end_date, amount, grade, evaluation
 ,(70, '2020-03-19', '2024-01-20', 631161.05, 8.0, '2019-09-19', 5, 49, 30, 29, 166, 'duis consequat dui nec nisi volutpat eleifend', 'convallis nulla neque libero convallis eget eleifend luctus ultricies eu nibh quisque id justo sit amet sapien dignissim vestibulum vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae nulla dapibus dolor vel est donec odio justo sollicitudin ut suscipit a feugiat et eros vestibulum ac est lacinia nisi venenatis tristique fusce congue diam id ornare imperdiet sapien urna');
 
 
-INSERT into science_field values (1,'Γεωργικές Επιστήμες'),
-(2,'Ιατρική'),(3,'Βιολογία'),(4,'Χημική Μηχανική'),(5,'Γλωσσολογία'),(6,'Πληροφορική'),
-(7,'Ηλεκτρολογία'),(8,'Γεωλογία'),(9,'Μαθηματικά'),(10,'Mηχανολογία'),(11,'Φυσική'),(12,'Ψυχολογία'),(13,'Κοινωνιολογία'),
-(14,'Τομέας Πολιτικών Μηχανικών');
+INSERT into science_field values (1,'agricultural_science', 'Γεωργικές Επιστήμες'),
+(2,'medicine','Ιατρική'),(3,'biology', 'Βιολογία'),(4,'chemical_engineering','Χημική Μηχανική'),(5,'linguistics', 'Γλωσσολογία'),(6,'computer_science','Πληροφορική'),
+(7,'electrical_engineering','Ηλεκτρολογία'),(8,'geology','Γεωλογία'),(9,'maths','Μαθηματικά'),(10,'mechanical_engineering','Mηχανολογία'),(11,'physics','Φυσική'),(12,'psychology','Ψυχολογία'),
+(13,'sociology','Κοινωνιολογία'),(14,'civil_engineering','Τομέας Πολιτικών Μηχανικών');
 
 insert into project_science_field values (1,2),(1,3),(2,8),(2,12),(3,2),(4,8),(4,11),(5,5),(6,3),(6,4),(6,7),(7,1),(7,3),(8,2),(8,3),(9,4),(9,7),(9,11),(10,3),(11,2),(11,3)
 ,(12,3),(13,11),(14,8),(14,6),(15,14),(15,10),(16,10),(17,1),(17,3),(18,12),(18,13),(19,12),(19,13),(20,9),(21,7),(21,10),(22,3),(22,6),(23,7),(23,10),(24,7),(25,7),(26,7)

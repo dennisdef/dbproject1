@@ -6,15 +6,17 @@
 {% block content %}
 <table class = "table">
     <tr>
-        <th>Name</th>
-        <th>Amount</th>
+        <th>Executive Name</th>
+        <th>Organisation Name</th>
+        <th>Total Amount</th>
     </tr>
     {% for ex in executives %}
     <tr>
-        <td>{{ex.name}}</td>
+        <td>{{ex.executive_name}}</td>
         <td>
-            {{ex.amount}}
+            {{ex.organisation_name}}
         </td>
+        <td>{{ex.total_money}}</td>
     </tr>
     {%endfor%}
 </table>

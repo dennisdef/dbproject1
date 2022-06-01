@@ -40,6 +40,7 @@ create table researcher(
 
 create table science_field(
 	field_id INT unsigned not null auto_increment,
+	en_name varchar(45) not null,
 	name varchar(45) not null,
 	primary key (field_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -125,3 +126,13 @@ create table project_science_field(
 	constraint fk_project_sf foreign key (project_id) references project (project_id) ON DELETE RESTRICT ON UPDATE CASCADE,
 	constraint fk_field_project foreign key (field_id) references science_field (field_id) ON DELETE RESTRICT ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+/*
+CREATE view projects_by_researcher as 
+SELECT
+CONCAT(r.first_name, " ", r.last_name) AS researcher,
+COUNT(r.r_id) as number_of_projects, 
+from researcher as r 
+inner join works as w on r.r_id = w.r_id 
+*/

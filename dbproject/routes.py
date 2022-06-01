@@ -43,7 +43,7 @@ def under_40():
 @app.route("/science_fields")
 def research_fields():
     cur = db.connection.cursor()
-    cur.execute("select sf.name, sf.en_name from science_field sf")
+    cur.execute(f"select sf.name, sf.en_name from science_field sf")
     column_names = [i[0] for i in cur.description]
     res = [dict(zip(column_names, entry)) for entry in cur.fetchall()]
     cur.close()
@@ -51,4 +51,17 @@ def research_fields():
                         pageTitle = "Science Fields",
                         sfs = res
     )
-                        
+
+@app.route("/science_fields/<sf>")
+def research_field(sf):
+    cur = db.connection.cursor()
+    query = "select sf.name as name, sf.en_name from science_field sf where sf.en_name = '{}' ".format(sf)
+    cur.execute(query)
+    column_names = [i[0] for i in cur.description]
+    res = dict(zip(column_names, cur.fetchone()))
+    cur.close()
+
+    return render_template('index.html',
+                        pageTitle = res.get("name"),
+                        test = res.get("en_name")
+    )     

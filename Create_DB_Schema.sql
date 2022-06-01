@@ -10,8 +10,8 @@ create table executive(
 
 create table program(
 	program_id INT unsigned not null auto_increment,
-	name varchar(1000) not null,
-	address varchar(1000) not null,
+	name varchar(55) not null,
+	address varchar(55) not null,
 	primary key (program_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

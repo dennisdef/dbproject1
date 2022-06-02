@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Statistics
+{% endblock title %}
+
+
+{% block content%}
+
+<ul>
+    <li>
+        <a class ="linkStyle" href="{{ url_for('project_per_year') }}">Show Consecutive Projects</a>
+    </li>
+
+    <li>      
+        <a class ="linkStyle" href="{{ url_for('executives') }}">Show Executives With Biggest Grands</a>
+    </li>
+
+    <li>
+        <a class ="linkStyle" href="{{ url_for('under_40') }}">Show Researchers Under 40</a>
+    </li>
+
+    <li>  
+        <a class ="linkStyle" href="{{ url_for('res_with_no_del') }}">Show Researchers With no Deliverables</a>
+    </li>
+</ul>
+
+{% endblock content%}

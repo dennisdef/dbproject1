@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{pageTitle}}
+{% endblock title %}
+
+
+{% block content%}
+
+<table class = "table">
+    <tr>
+        <th>Researcher Name</th>
+        <th>Number of projects</th>
+    </tr>
+    {% for rnd in rnds %}
+    <tr>
+        <td>{{rnd.name}}</td>
+        <td>
+            {{rnd.n_projects}}
+        </td>
+    </tr>
+    {%endfor%}
+</table>
+
+
+{% endblock content%}

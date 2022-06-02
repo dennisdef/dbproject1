@@ -4,6 +4,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <title>
         {% block title %}
         {% endblock title %}
@@ -11,16 +12,15 @@
 </head>
 <body>
     <div class = "container">
-        <div class = "row">
-             <div class="col-12" >
-                <h2 class = "center">ELIDEK</h2>
-                <a class="btn btn-primary" href="{{ url_for('index') }}">Home</a>
-                <a class="btn btn-primary" href="{{ url_for('science_fields') }}">Show Research Fields</a>
-                <a class="btn btn-primary" href="{{ url_for('project_per_year') }}">Show Consecutive Projects</a>
-                <a class="btn btn-primary" href="{{ url_for('executives') }}">Show Executives With Biggest Grands</a>
-                <a class="btn btn-primary" href="{{ url_for('under_40') }}">Show Researchers Under 40</a>
+            <div class="row align-items-center" >
+                <div class = "col"><h1 class ="text-center title">ELIDEK</h1></div>
             </div>
-        </div>
+            <div>
+                <a class="btn btn-danger btn-lg" href="{{ url_for('index') }}">Home</a>
+                <a class="btn btn-outline-danger btn-lg" href="{{ url_for('science_fields') }}">Show Research Fields</a>
+                <a class="btn btn-outline-danger btn-lg" href="{{ url_for('statistics') }}">Statistics</a>
+
+            </div>
     </div>
     {% block content %}
     {% endblock content %}

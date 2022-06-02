@@ -3,12 +3,12 @@
 {% block title %}
     {{pageTitle}}
 {% endblock title %}
-
+ 
 {% block content %}
 
 <ul>
     {% for sf in sfs%}
-    <li><a href="/science_fields/{{sf.en_name}}">{{sf.name}}</a>
+    <li><a class ="linkStyle" href="/science_fields/{{sf.en_name}}">{{sf.name}}</a>
     {%endfor%}
 </ul>
 

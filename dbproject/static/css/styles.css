@@ -1,0 +1,16 @@
+body{
+    background-color: f5ddd8;
+}
+
+.title{
+    font-size: 70;
+    color: 642011;
+}
+
+.linkStyle{
+    color: 000;
+}
+
+.linkStyle:hover{
+    color: 000;
+}

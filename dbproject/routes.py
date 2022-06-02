@@ -1,3 +1,4 @@
+import statistics
 from flask import Flask, render_template
 from flask_mysqldb import MySQL
 from dbproject import db, app
@@ -13,12 +14,20 @@ def index():
     ##res = [dict(zip(column_names, entry)) for entry in cur.fetchall()]
     # cur.close()
 
+@app.route("/statistics")
+def statistics():
+    return render_template('statistics.html')
+
 
 @app.route("/executives")
 def executives():
     cur = db.connection.cursor()
     cur.execute(
-        "select e.name as executive_name, o.name as organisation_name, sum(p.amount) as total_money from executive e inner join project p on p.ex_id = e.ex_id INNER join organisation o on p.organisation_id =o.organisation_id group by e.name, o.organisation_id order by total_money desc limit 5")
+        "select e.name as executive_name, o.name as organisation_name, sum(p.amount) as total_money "
+        "from executive e inner join project p on p.ex_id = e.ex_id "
+        "INNER join organisation o on p.organisation_id = o.organisation_id "
+        "inner join company c on o.organisation_id = c.organisation_id "
+        "group by e.name, o.organisation_id order by total_money desc limit 5")
     column_names = [i[0] for i in cur.description]
     res = [dict(zip(column_names, entry)) for entry in cur.fetchall()]
     cur.close()
@@ -84,4 +93,25 @@ def project_per_year():
     return render_template("project_per_year.html",
                            pageTitle="Consecutive projects",
                            ppys=res
+                           )
+
+
+@app.route("/researcher_with_no_del")
+def res_with_no_del():
+    cur = db.connection.cursor()
+    cur.execute("select CONCAT(r.first_name, ' ', r.last_name) as name, count(w.r_id) as n_projects "
+                "from researcher r inner join works w on r.r_id = w.r_id "
+                "inner join project p on w.project_id = p.project_id "
+                "where not exists (SELECT p2.project_id FROM project p2 "
+                "inner join deliverable d on p2.project_id =d.project_id "
+                "where p.project_id = p2.project_id) "
+                "GROUP BY r.r_id "
+                "having count(w.r_id) > 0 order by n_projects desc")
+    column_names = [i[0] for i in cur.description]
+    res = [dict(zip(column_names, entry)) for entry in cur.fetchall()]
+    cur.close()
+
+    return render_template("res_no_del.html",
+                           pageTitle="Researchers with no deliverables",
+                           rnds=res
                            )

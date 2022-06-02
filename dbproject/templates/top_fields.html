@@ -5,22 +5,21 @@
 {% endblock title %}
 
 
-{% block content%}
+{% block content %}
 
 <table class = "table table-striped table-hover">
     <tr>
-        <th>Company Name</th>
-        <th>Number of projects</th>
+        <th>Field Couples</th>
+        <th>Number of projects in Couple</th>
     </tr>
-    {% for ppy in ppys %}
+    {% for tf in top_fields %}
     <tr>
-        <td>{{ppy.name}}</td>
+        <td>{{tf.field_couple}}</td>
         <td>
-            {{ppy.count_projects}}
+            {{tf.np}}
         </td>
     </tr>
     {%endfor%}
 </table>
-
-
-{% endblock content%}
+    
+    {% endblock content %}

@@ -128,12 +128,19 @@ create table project_science_field(
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-CREATE view projects_by_researcher as 
-SELECT
-CONCAT(r.first_name, " ", r.last_name) AS researcher,
-COUNT(r.r_id) as number_of_projects
-from researcher r 
-inner join works w on r.r_id = w.r_id group by r.r_id ;
+CREATE VIEW project_per_year AS
+select
+    o.organisation_id ,o.name, year(p.start_date) AS s_year,
+    count(p.project_id) AS count_projects
+from organisation o
+inner join project p on p.organisation_id = o.organisation_id
+group by o.organisation_id, year(p.start_date)
+having count(s_year) > 10;
+
+CREATE view science_field_per_project as 
+SELECT p.project_id, sf.name, sf.field_id  from project_science_field psf 
+inner join project p on p.project_id =psf.project_id 
+inner join science_field sf on psf.field_id = sf.field_id;
 
 
 

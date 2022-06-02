@@ -23,11 +23,11 @@ def statistics():
 def executives():
     cur = db.connection.cursor()
     cur.execute(
-        "select e.name as executive_name, o.name as organisation_name, sum(p.amount) as total_money "
-        "from executive e inner join project p on p.ex_id = e.ex_id "
-        "INNER join organisation o on p.organisation_id = o.organisation_id "
-        "inner join company c on o.organisation_id = c.organisation_id "
-        "group by e.name, o.organisation_id order by total_money desc limit 5")
+        """select e.name as executive_name, o.name as organisation_name, sum(p.amount) as total_money 
+        from executive e inner join project p on p.ex_id = e.ex_id
+        INNER join organisation o on p.organisation_id = o.organisation_id
+        inner join company c on o.organisation_id = c.organisation_id
+        group by e.name, o.organisation_id order by total_money desc limit 5""")
     column_names = [i[0] for i in cur.description]
     res = [dict(zip(column_names, entry)) for entry in cur.fetchall()]
     cur.close()
@@ -40,7 +40,10 @@ def executives():
 @app.route("/under_40")
 def under_40():
     cur = db.connection.cursor()
-    cur.execute("select r.first_name, r.last_name, count(r.r_id) as r_number from researcher r inner join works w on w.r_id = r.r_id WHERE TIMESTAMPDIFF(year, r.birth_date,CURDATE()) < 40 group by r.r_id order by count(r.r_id) desc")
+    cur.execute("""select r.first_name, r.last_name, count(r.r_id) as r_number 
+                   from researcher r inner join works w on w.r_id = r.r_id 
+                   WHERE TIMESTAMPDIFF(year, r.birth_date,CURDATE()) < 40 
+                   group by r.r_id order by count(r.r_id) desc""")
     column_names = [i[0] for i in cur.description]
     res = [dict(zip(column_names, entry)) for entry in cur.fetchall()]
     cur.close()
@@ -81,11 +84,11 @@ def science_field(sf):
 @app.route("/con_project_per_year")
 def project_per_year():
     cur = db.connection.cursor()
-    cur.execute("SELECT ppy1.name, ppy1.count_projects from" +
-                " project_per_year ppy1 inner join" +
-                " project_per_year ppy2" +
-                " on ppy1.organisation_id = ppy2.organisation_id" +
-                " and ppy1.s_year = ppy2.s_year + 1 ")
+    cur.execute("""SELECT ppy1.name, ppy1.count_projects from
+                 project_per_year ppy1 inner join
+                 project_per_year ppy2
+                 on ppy1.organisation_id = ppy2.organisation_id
+                 and ppy1.s_year = ppy2.s_year + 1 """)
     column_names = [i[0] for i in cur.description]
     res = [dict(zip(column_names, entry)) for entry in cur.fetchall()]
     cur.close()
@@ -99,14 +102,14 @@ def project_per_year():
 @app.route("/researcher_with_no_del")
 def res_with_no_del():
     cur = db.connection.cursor()
-    cur.execute("select CONCAT(r.first_name, ' ', r.last_name) as name, count(w.r_id) as n_projects "
-                "from researcher r inner join works w on r.r_id = w.r_id "
-                "inner join project p on w.project_id = p.project_id "
-                "where not exists (SELECT p2.project_id FROM project p2 "
-                "inner join deliverable d on p2.project_id =d.project_id "
-                "where p.project_id = p2.project_id) "
-                "GROUP BY r.r_id "
-                "having count(w.r_id) > 0 order by n_projects desc")
+    cur.execute("""select CONCAT(r.first_name, ' ', r.last_name) as name, count(w.r_id) as n_projects
+                from researcher r inner join works w on r.r_id = w.r_id 
+                inner join project p on w.project_id = p.project_id 
+                where not exists (SELECT p2.project_id FROM project p2 
+                inner join deliverable d on p2.project_id =d.project_id 
+                where p.project_id = p2.project_id) 
+                GROUP BY r.r_id 
+                having count(w.r_id) > 0 order by n_projects desc""")
     column_names = [i[0] for i in cur.description]
     res = [dict(zip(column_names, entry)) for entry in cur.fetchall()]
     cur.close()
@@ -115,3 +118,20 @@ def res_with_no_del():
                            pageTitle="Researchers with no deliverables",
                            rnds=res
                            )
+
+@app.route("/top_scinece_field_couples")
+def top_science_field_couple():
+    cur = db.connection.cursor()
+    cur.execute("""SELECT CONCAT(a.name, " - ", b.name) as field_couple, count(a.project_id) as np from
+                science_field_per_project a 
+                inner join science_field_per_project b 
+                on a.project_id = b.project_id and a.field_id > b.field_id
+                group by field_couple 
+                ORDER by np desc limit 3""")
+    column_names = [i[0] for i in cur.description]
+    res = [dict(zip(column_names, entry)) for entry in cur.fetchall()]
+    cur.close()
+    return render_template("top_fields.html",
+                           pageTitle="Top science field couples", 
+                           top_fields=res)
+                           

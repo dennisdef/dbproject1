@@ -128,11 +128,12 @@ create table project_science_field(
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-/*
 CREATE view projects_by_researcher as 
 SELECT
 CONCAT(r.first_name, " ", r.last_name) AS researcher,
-COUNT(r.r_id) as number_of_projects, 
-from researcher as r 
-inner join works as w on r.r_id = w.r_id 
-*/
+COUNT(r.r_id) as number_of_projects
+from researcher r 
+inner join works w on r.r_id = w.r_id group by r.r_id ;
+
+
+

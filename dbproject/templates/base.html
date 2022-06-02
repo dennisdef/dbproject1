@@ -9,12 +9,19 @@
         {% endblock title %}
     </title> 
 </head>
-<body style="padding: 2%;">
-    <h2 class = "center">ELIDEK</h2>
-    <a class="btn btn-primary" id="show-btn" href="/">Home</a>
-    <a class="btn btn-primary" id="show-btn" href="/science_fields">Show Research Fields</a>
-    <a class="btn btn-primary" id="show-btn" href="/executives">Show Executives With Biggest Grands</a>
-    <a class="btn btn-primary" id="show-btn" href="/under_40">Show Researchers Under 40</a>
+<body>
+    <div class = "container">
+        <div class = "row">
+             <div class="col-12" >
+                <h2 class = "center">ELIDEK</h2>
+                <a class="btn btn-primary" href="{{ url_for('index') }}">Home</a>
+                <a class="btn btn-primary" href="{{ url_for('science_fields') }}">Show Research Fields</a>
+                <a class="btn btn-primary" href="{{ url_for('project_per_year') }}">Show Consecutive Projects</a>
+                <a class="btn btn-primary" href="{{ url_for('executives') }}">Show Executives With Biggest Grands</a>
+                <a class="btn btn-primary" href="{{ url_for('under_40') }}">Show Researchers Under 40</a>
+            </div>
+        </div>
+    </div>
     {% block content %}
     {% endblock content %}
 </body>

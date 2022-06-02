@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{pageTitle}}
+{% endblock title %}
+
+
+{% block content%}
+
+<table class = "table">
+    <tr>
+        <th>Company Name</th>
+        <th>Number of projects</th>
+    </tr>
+    {% for ppy in ppys %}
+    <tr>
+        <td>{{ppy.name}}</td>
+        <td>
+            {{ppy.count_projects}}
+        </td>
+    </tr>
+    {%endfor%}
+</table>
+
+
+{% endblock content%}

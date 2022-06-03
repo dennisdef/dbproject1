@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Add Executive
+{% endblock title %}
+
+
+{% block content%}
+<div class="container">
+    {% include "flash_messages.html" %}
+    <div class="row" id="row">
+        <div class="col-md-12">
+            <form class="form-horizontal" name="executive-form" method="POST">
+                <!-- hidden_tag returns the form's security metadata -->
+                {{ form.hidden_tag() }}
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.name.label(class = "form-label") }}
+                    <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                    {{ form.name(class = "form-control", placeholder="Enter Name", required = False) }}
+                    {% if form.name.errors %}
+                    <ul class = "errors">
+                        {% for error in form.name.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                
+                </div>
+                {{ form.submit(class = "btn btn-danger btn-submit-custom") }}
+            </form>
+    </div>
+    </div>
+</div>
+
+{%endblock%}

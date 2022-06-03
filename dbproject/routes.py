@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, redirect, url_for, abort
+from flask import Flask, jsonify, render_template, request, flash, redirect, url_for, abort
 from flask_mysqldb import MySQL
 from dbproject import db, app
 from dbproject.forms import *
@@ -7,11 +7,16 @@ from dbproject.forms import *
 def index():
     return render_template('index.html',
                            pageTitle="Home")
-    ## cur = db.connection.cursor()
-    ##cur.execute("select r_id, first_name, last_name from researcher ")
-    ##column_names = [i[0] for i in cur.description]
-    ##res = [dict(zip(column_names, entry)) for entry in cur.fetchall()]
-    # cur.close()
+    
+@app.route("/import_researchers/<organisation_id>")
+def import_researchers(organisation_id):
+    cur = db.connection.cursor()
+    cur.execute("select r.r_id, concat(r.first_name, ' ',r.last_name) as name from researcher r where organisation_id = '{}' ".format(organisation_id))
+    column_names = [i[0] for i in cur.description]
+    rs = [dict(zip(column_names, entry)) for entry in cur.fetchall()]
+    cur.close()
+    researchers = [{'id': r['r_id'], 'name': r['name']} for r in rs]
+    return jsonify(researchers)
 
 @app.route("/statistics")
 def statistics():
@@ -21,30 +26,68 @@ def statistics():
 def add():
     return render_template('add.html')
 
-@app.route("/add_project")
+@app.route("/add_project", methods = ["GET", "POST"])
 def add_project():
     projectform = ProjectForm()
+
+    if(request.method == "POST" and projectform.validate_on_submit()):
+        newProject = projectform.__dict__
+        print(newProject['program'].data)
+        return render_template('add_project.html', form = projectform)
+
+    cur = db.connection.cursor()
+    cur.execute("select program_id, name from program")
+    column_names = [i[0] for i in cur.description]
+    pr = [dict(zip(column_names, entry)) for entry in cur.fetchall()]
+    cur.execute("select organisation_id, name from organisation")
+    column_names = [i[0] for i in cur.description]
+    org = [dict(zip(column_names, entry)) for entry in cur.fetchall()]
+    cur.close()
+    programs = [(p.get('program_id'), p.get('name')) for p in pr]
+    organisations = [('0','-')] + [(o.get('organisation_id'), o.get('name')) for o in org]
+    projectform.program.choices = programs
+    projectform.organisation.choices = organisations
     return render_template('add_project.html', form = projectform)
 
-@app.route("/add_organisation")
-def add_organisation():
-    projectform = ProjectForm()
-    return render_template('add_project.html', form = projectform)
-
-@app.route("/add_program")
+@app.route("/add_program", methods=["GET", "POST"])
 def add_program():
-    projectform = ProjectForm()
-    return render_template('add_project.html', form = projectform)
+    projectform = ProgramForm()
+    if(request.method == "POST" and projectform.validate_on_submit()):
+        newProgram = ProgramForm.__dict__
+        return render_template('add_program.html', form = projectform) 
+    return render_template('add_program.html', form = projectform)
 
-@app.route("/add_researcher")
+@app.route("/add_organisation", methods=["GET", "POST"])
+def add_organisation():
+    projectform = OrganisationForm()
+    if(request.method == "POST" and projectform.validate_on_submit()):
+        newOrganisation = OrganisationForm.__dict__        
+        return render_template('add_organisation.html', form = projectform)
+    return render_template('add_organisation.html', form = projectform)
+
+@app.route("/add_researcher", methods=["GET", "POST"])
 def add_researcher():
-    projectform = ProjectForm()
-    return render_template('add_project.html', form = projectform)
+    projectform = ResearcherForm()
+    if(request.method == "POST" and projectform.validate_on_submit()):
+        newResearcher = ResearcherForm.__dict__
+        return render_template('add_researcher.html', form = projectform)
 
-@app.route("/add_executive")
+    cur = db.connection.cursor()
+    cur.execute("SELECT organisation_id, name FROM organisation")
+    column_names = [i[0] for i in cur.description]
+    org = [dict(zip(column_names, entry)) for entry in cur.fetchall()]
+    cur.close()
+    organisations = [(o.get('organisation_id'), o.get('name')) for o in org]
+    projectform.organisation.choices = organisations
+    return render_template('add_researcher.html', form = projectform)
+
+@app.route("/add_executive", methods=["GET", "POST"])
 def add_executive():
-    projectform = ProjectForm()
-    return render_template('add_project.html', form = projectform)
+    projectform = ExecutiveForm()
+    if(request.method == "POST" and projectform.validate_on_submit()):
+        newExecutive = ExecutiveForm.__dict__
+        return render_template('add_executive.html', form = projectform)
+    return render_template('add_executive.html', form = projectform)
 
 
 @app.route("/executives")

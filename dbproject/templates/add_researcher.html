@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Add Researcher
+{% endblock title %}
+
+{% block content%}
+<div class="container">
+    {% include "flash_messages.html" %}
+    <div class="row" id="row">
+        <div class="col-md-12">
+            <form class="form-horizontal" name="researcher-form" method="POST">
+                <!-- hidden_tag returns the form's security metadata -->
+                {{ form.hidden_tag() }}
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.first_name.label(class = "form-label") }}
+                    <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                    {{ form.first_name(class = "form-control", placeholder="Enter First Name", required = False) }}
+                    {% if form.first_name.errors %}
+                    <ul class = "errors">
+                        {% for error in form.first_name.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.last_name.label(class = "form-label") }}
+                    {{ form.last_name(class = "form-control", placeholder="Enter Last Name", required = False) }}
+                    {% if form.last_name.errors %}
+                    <ul class = "errors">
+                        {% for error in form.last_name.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.birth_date.label(class = "form-label") }}
+                    {{ form.birth_date(class = "form-control", placeholder="Enter Birth Date", required = False) }}
+                    {% if form.birth_date.errors %}
+                    <ul class = "errors">
+                        {% for error in form.birth_date.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.sex.label(class = "form-label") }}
+                    {{ form.sex(class = "form-control", placeholder="Enter Sex", required = False) }}
+                    {% if form.sex.errors %}
+                    <ul class = "errors">
+                        {% for error in form.sex.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.start_date.label(class = "form-label") }}
+                    {{ form.start_date(class = "form-control", placeholder="Enter start_date", required = False) }}
+                    {% if form.start_date.errors %}
+                    <ul class = "errors">
+                        {% for error in form.start_date.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.organisation.label(class = "form-label") }}
+                    {{ form.organisation(class = "form-control", placeholder="Select Organisation", required = False) }}
+                    {% if form.organisation.errors %}
+                    <ul class = "errors">
+                        {% for error in form.organisation.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                {{ form.submit(class = "btn btn-danger btn-submit-custom") }}
+            </form>
+    </div>
+    </div>
+</div>
+
+{%endblock%}

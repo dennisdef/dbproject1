@@ -8,49 +8,129 @@
 {% block content%}
 <div class="container">
     {% include "flash_messages.html" %}
-    <div class="row" id="row">
-        <div class="col-md-12">
-            <form class="form-horizontal" name="project-form" method="POST">
+            <form name="project-form" method="POST">
+                <div class="row" >
                 <!-- hidden_tag returns the form's security metadata -->
                 {{ form.hidden_tag() }}
-                <div class="form-group col-sm-3 mb-3">
-                    {{ form.title.label(class = "form-label") }}
-                    <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
-                    {{ form.title(class = "form-control", placeholder="Enter title", required = False) }}
-                    {% if form.title.errors %}
-                    <ul class = "errors">
-                        {% for error in form.title.errors %}
-                        <li class = "text-danger">{{ error }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
+                <div class="col-5">
+                    <div class="form-group mb-2">
+                        {{ form.title.label(class = "form-label") }}
+                        <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                        {{ form.title(class = "form-control", placeholder="Enter title", required = False) }}
+                        {% if form.title.errors %}
+                        <ul class = "errors">
+                            {% for error in form.title.errors %}
+                            <li class = "text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                    <div class="form-group mb-2">
+                        {{ form.summary.label(class = "form-label") }}
+                        {{ form.summary(class = "form-control", placeholder="Enter summary", required = False) }}
+                        {% if form.summary.errors %}
+                        <ul class = "errors">
+                            {% for error in form.summary.errors %}
+                            <li class = "text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-6 mb-2">                        
+                            {{ form.start_date.label(class = "form-label") }}
+                            {{ form.start_date(class = "form-control", required = False) }}
+                            {% if form.start_date.errors %}
+                            <ul class = "errors">
+                                {% for error in form.start_date.errors %}
+                                <li class = "text-danger">{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                        </div>
+                        <div class="form-group col-sm-6 mb-2">
+                            {{ form.end_date.label(class = "form-label") }}
+                            {{ form.end_date(class = "form-control", required = False) }}
+                            {% if form.end_date.errors %}
+                            <ul class = "errors">
+                                {% for error in form.end_date.errors %}
+                                <li class = "text-danger">{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                        </div> 
+                    </div>
+                    <div class="form-group col-sm-6 mb-2">
+                        {{ form.amount.label(class = "form-label") }}
+                        {{ form.amount(class = "form-control", placeholder="Enter amount", required = False) }}
+                        {% if form.amount.errors %}
+                        <ul class = "errors">
+                            {% for error in form.amount.errors %}
+                            <li class = "text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-6 mb-2">
+                            {{ form.grade.label(class = "form-label") }}
+                            {{ form.grade(class = "form-control", placeholder="Enter grade", required = False) }}
+                            {% if form.grade.errors %}
+                            <ul class = "errors">
+                                {% for error in form.grade.errors %}
+                                <li class = "text-danger">{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                        </div>
+                        <div class="form-group col-sm-6 mb-2">
+                            {{ form.evaluation_date.label(class = "form-label") }}
+                            {{ form.evaluation_date(class = "form-control", required = False) }}
+                            {% if form.evaluation_date.errors %}
+                            <ul class = "errors">
+                                {% for error in form.evaluation_date.errors %}
+                                <li class = "text-danger">{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group col mb-2">
+                        {{ form.program.label(class = "form-label") }}
+                        {{ form.program(class = "form-control", required = False) }}
+                        {% if form.program.errors %}
+                        <ul class = "errors">
+                            {% for error in form.program.errors %}
+                            <li class = "text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                    {{ form.submit(class = "btn btn-danger btn-submit-custom") }}
                 </div>
-                <div class="form-group col-sm-3 mb-3">
-                    {{ form.summary.label(class = "form-label") }}
-                    {{ form.summary(class = "form-control", placeholder="Enter summary", required = False) }}
-                    {% if form.summary.errors %}
-                    <ul class = "errors">
-                        {% for error in form.summary.errors %}
-                        <li class = "text-danger">{{ error }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
+                <div class="col-7">
+                    <div class="form-group col-10 mb-2">
+                        {{ form.organisation.label(class = "form-label") }}
+                        {{ form.organisation(class = "form-control", required = False) }}
+                        {% if form.organisation.errors %}
+                        <ul class = "errors">
+                            {% for error in form.organisation.errors %}
+                            <li class = "text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group col-10 mb-2" id = "researchers">
+
+                    </div>
+                    <div id="add_button"></div>
+                    </div>
                 </div>
-                <div class="form-group col-sm-3 mb-3">
-                    {{ form.start_date.label(class = "form-label") }}
-                    {{ form.start_date(class = "form-control", placeholder="Enter start_date", required = False) }}
-                    {% if form.start_date.errors %}
-                    <ul class = "errors">
-                        {% for error in form.start_date.errors %}
-                        <li class = "text-danger">{{ error }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
-                </div>
-                {{ form.submit(class = "btn btn-primary btn-submit-custom") }}
-            </form>
-    </div>
-    </div>
+                
+            </div>
+        </form>
+    
 </div>
 
 {%endblock%}

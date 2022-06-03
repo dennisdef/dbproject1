@@ -68,9 +68,10 @@ def executives():
 @app.route("/under_40")
 def under_40():
     cur = db.connection.cursor()
-    cur.execute("""select r.first_name, r.last_name, count(r.r_id) as r_number 
+    cur.execute("""select r.r_id ,r.first_name, r.last_name, count(r.r_id) as r_number 
                    from researcher r inner join works w on w.r_id = r.r_id 
-                   WHERE TIMESTAMPDIFF(year, r.birth_date,CURDATE()) < 40 
+                   inner join project p on p.project_id = w.project_id
+                   WHERE (TIMESTAMPDIFF(year, r.birth_date,CURDATE()) < 40) and p.end_date > CURDATE()
                    group by r.r_id order by count(r.r_id) desc""")
     column_names = [i[0] for i in cur.description]
     res = [dict(zip(column_names, entry)) for entry in cur.fetchall()]

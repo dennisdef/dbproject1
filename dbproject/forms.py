@@ -14,7 +14,7 @@ class ProjectForm(FlaskForm):
     start_date = DateField(label = "Start Date", default = date.today())
     end_date = DateField(label = "End Date", validators = [DataRequired(message = "End Date is a required field.")])
     amount = DecimalField(places = 2, label = "Amount", validators = [DataRequired(message = "Amount is a required field."), NumberRange(min = 100000, max = 1000000, message = "Amount must be between 100,000 and 1,000,000")])
-    grade = DecimalField(places = 1, label= "Grade", validators= [DataRequired(message = "Grade is a required field."), NumberRange(min = 100000, max = 1000000, message = "Amount must be between 100,000 and 1,000,000")])
+    grade = DecimalField(places = 1, label= "Grade", validators= [DataRequired(message = "Grade is a required field."), NumberRange(min = 0, max = 10, message = "Amount must be between 100,000 and 1,000,000")])
     evaluation_date = DateField(label= "Evaluation Date", validators = [DataRequired(message = "Evaluation Date is a required field.")])
     program = SelectField('Program', coerce=int, choices=[], validate_choice=False)
     organisation = SelectField('Organisation', coerce=int, choices=[], validate_choice=False)
@@ -25,6 +25,12 @@ class ProjectForm(FlaskForm):
         n = abs(d.as_tuple().exponent)
         if (n>2):
             raise ValidationError("Amount must have up to 2 decimal digits")
+
+    def validate_grade(form,field):
+        d = decimal.Decimal(field.data)
+        n = abs(d.as_tuple().exponent)
+        if (n>1):
+            raise ValidationError("Amount must have up to 1 decimal digits")
 
 class OrganisationForm(FlaskForm):
     name = StringField(label = "Name", validators = [DataRequired(message = "Name is a required field.")])

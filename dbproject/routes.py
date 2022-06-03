@@ -1,8 +1,7 @@
-import statistics
-from flask import Flask, render_template
+from flask import Flask, render_template, request, flash, redirect, url_for, abort
 from flask_mysqldb import MySQL
 from dbproject import db, app
-
+from dbproject.forms import *
 
 @app.route("/")
 def index():
@@ -17,6 +16,35 @@ def index():
 @app.route("/statistics")
 def statistics():
     return render_template('statistics.html')
+
+@app.route("/add")
+def add():
+    return render_template('add.html')
+
+@app.route("/add_project")
+def add_project():
+    projectform = ProjectForm()
+    return render_template('add_project.html', form = projectform)
+
+@app.route("/add_organisation")
+def add_organisation():
+    projectform = ProjectForm()
+    return render_template('add_project.html', form = projectform)
+
+@app.route("/add_program")
+def add_program():
+    projectform = ProjectForm()
+    return render_template('add_project.html', form = projectform)
+
+@app.route("/add_researcher")
+def add_researcher():
+    projectform = ProjectForm()
+    return render_template('add_project.html', form = projectform)
+
+@app.route("/add_executive")
+def add_executive():
+    projectform = ProjectForm()
+    return render_template('add_project.html', form = projectform)
 
 
 @app.route("/executives")
@@ -109,7 +137,7 @@ def res_with_no_del():
                 inner join deliverable d on p2.project_id =d.project_id 
                 where p.project_id = p2.project_id) 
                 GROUP BY r.r_id 
-                having count(w.r_id) > 0 order by n_projects desc""")
+                having count(w.r_id) > 4 order by n_projects desc""")
     column_names = [i[0] for i in cur.description]
     res = [dict(zip(column_names, entry)) for entry in cur.fetchall()]
     cur.close()
@@ -135,3 +163,4 @@ def top_science_field_couple():
                            pageTitle="Top science field couples", 
                            top_fields=res)
                            
+

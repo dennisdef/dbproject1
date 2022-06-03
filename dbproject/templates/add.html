@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Add
+{% endblock title %}
+
+
+{% block content%}
+
+<ul>
+    <li>
+        <a class ="linkStyle" href="{{ url_for('add_organisation') }}">Add Organisation</a>
+    </li>
+
+    <li>
+        <a class ="linkStyle" href="{{ url_for('add_researcher') }}">Add Researcher</a>
+    </li>
+
+    <li>      
+        <a class ="linkStyle" href="{{ url_for('add_project') }}">Add Project</a>
+    </li>
+
+    <li>
+        <a class ="linkStyle" href="{{ url_for('add_program') }}">Add Program</a>
+    </li>
+
+    <li>  
+        <a class ="linkStyle" href="{{ url_for('add_executive') }}">Add Executive</a>
+    </li>
+</ul>
+
+{% endblock content%}

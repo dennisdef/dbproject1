@@ -142,5 +142,3 @@ SELECT p.project_id, sf.name, sf.field_id  from project_science_field psf
 inner join project p on p.project_id =psf.project_id 
 inner join science_field sf on psf.field_id = sf.field_id;
 
-
-

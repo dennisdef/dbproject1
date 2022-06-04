@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}
+    All Executives
+{% endblock title %}
+
+
+{% block content%}
+{% include "flash_messages.html" %}
+<table class = "table table-striped table-hover">
+    <tr>
+        <th>Executive Id</th>
+        <th>Executive Name</th>
+        <th></th>
+        <th></th>
+    </tr>
+    {% for r in res %}
+    <tr>
+        <td>{{r.id}}</td>
+        <td>
+            {{r.name}}
+        </td>
+        <td><a class="btn btn-outline-danger" href="{{ url_for('update_executive', r_id = r.id)}}">Update</a></td>
+        <td><a class="btn btn-outline-danger" href="{{ url_for('delete_executive', r_id = r.id)}}">Delete</a></td>
+    </tr>
+    {%endfor%}
+</table>
+{% endblock content %}

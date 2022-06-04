@@ -13,11 +13,17 @@ class ProjectForm(FlaskForm):
     summary = TextAreaField(label = "Summary", validators = [DataRequired(message = "Summary is a required field.")])
     start_date = DateField(label = "Start Date", default = date.today())
     end_date = DateField(label = "End Date", validators = [DataRequired(message = "End Date is a required field.")])
+    science_field1 = SelectField(label = "Science Field 1", choices = [('','')], validators = [DataRequired(message = "Science Field 1 is a required field.")])
+    science_field2 = SelectField(label = "Science Field 2", choices = [('','')])
+    executive = SelectField(label = "Executive", validators = [DataRequired(message = "Executive is a required field.")], choices = [])
     amount = DecimalField(places = 2, label = "Amount", validators = [DataRequired(message = "Amount is a required field."), NumberRange(min = 100000, max = 1000000, message = "Amount must be between 100,000 and 1,000,000")])
     grade = DecimalField(places = 1, label= "Grade", validators= [DataRequired(message = "Grade is a required field."), NumberRange(min = 0, max = 10, message = "Amount must be between 100,000 and 1,000,000")])
     evaluation_date = DateField(label= "Evaluation Date", validators = [DataRequired(message = "Evaluation Date is a required field.")])
-    program = SelectField('Program', coerce=int, choices=[], validate_choice=False)
-    organisation = SelectField('Organisation', coerce=int, choices=[], validate_choice=False)
+    program = SelectField('Program', coerce=int, choices=[], validate_choice=False, validators = [DataRequired(message = "Program is a required field.")])
+    organisation = SelectField('Organisation', coerce=int, choices=[], validate_choice=False, validators = [DataRequired(message = "Organisation is a required field.")])
+    evaluator = SelectField('Evaluator', coerce=int, choices=[], validate_choice=False, validators = [DataRequired(message = "Evaluator is a required field.")])
+    lead_researcher = SelectField('Lead Researcher', coerce=int, choices=[], validate_choice=False, validators = [DataRequired(message = "Lead Researcher is a required field.")])
+    researchers = SelectMultipleField('Researchers', coerce=int, choices=[], validate_choice=False, validators = [DataRequired(message = "Researchers is a required field.")])
     submit = SubmitField("Submit")
 
     def validate_amount(form,field):
@@ -31,6 +37,18 @@ class ProjectForm(FlaskForm):
         n = abs(d.as_tuple().exponent)
         if (n>1):
             raise ValidationError("Amount must have up to 1 decimal digits")
+
+    def validate_dates(form, self):
+        if self.start_date.data > self.end_date.data:
+            raise ValidationError("Start date must be before end date")
+        if self.evaluation_date.data > self.start_date.data:
+            raise ValidationError("Evaluation date must be before start date")
+        if self.evaluation_date.data > self.end_date.data:
+            raise ValidationError("Evaluation date must be before end date")
+        if self.end_date.data - self.start_date.data < 365 or self.end_date.data - self.start_date.data > 365*4:
+            raise ValidationError("Project must be between 1 and 4 years")
+    
+
 
 class OrganisationForm(FlaskForm):
     name = StringField(label = "Name", validators = [DataRequired(message = "Name is a required field.")])

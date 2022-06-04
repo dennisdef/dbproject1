@@ -10,6 +10,12 @@
     <div class="row" id="row">
         <div class="col-md-12">
             <form class="form-horizontal" name="researcher-form" method="POST">
+                {% if r_id %}
+                    <input type="hidden" name="r_id" value="{{r_id}}">
+                {% endif %}
+                {% if o_id %}
+                    <input type="hidden" name="o_id" value="{{o_id}}">
+                {% endif %}
                 <!-- hidden_tag returns the form's security metadata -->
                 {{ form.hidden_tag() }}
                 <div class="form-group col-sm-3 mb-3">

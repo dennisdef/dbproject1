@@ -1,0 +1,54 @@
+@app.route("/add_project", methods = ["GET", "POST"])
+def add_project():
+    projectform = ProjectForm()
+    if(request.method == "POST" ):##and projectform.validate_on_submit()):
+        newProject = projectform.__dict__
+        researchers = [int(i) for i in request.form.getlist('researchers')]
+        evaluator =  newProject['evaluator'].data
+        if evaluator in researchers:
+            flash("Evaluator cannot be a researcher in the project", "danger")
+            return render_template('add_project.html', projectform=projectform)
+        query = "INSERT INTO project (title, summary, start_date, end_date, amount, grade, evaluation_date, evaluator_id, ex_id, program_id, organisation_id, r_id) values ('{}', '{}', '{}', '{}', {}, {}, '{}', {}, {}, {}, {}, {})".format(
+         newProject['title'].data, newProject['summary'].data, newProject['start_date'].data, newProject['end_date'].data, newProject['amount'].data, newProject['grade'].data, 
+        newProject['evaluation_date'].data, newProject['evaluator'].data, newProject['executive'].data, newProject['program'].data, newProject['organisation'].data, request.form['lead_researcher'])
+        cur = db.connection.cursor()
+        cur.execute(query)
+        cur.execute("SELECT LAST_INSERT_ID()")
+        for r in researchers:
+            cur.execute("insert into works (project_id, r_id) values ({}, {})".format(cur.fetchone()[0], r))
+        cur.execute("insert into project_science_field (project_id, field_id) values ({}, {})".format(cur.fetchone()[0], newProject['science_field1'].data))
+        if newProject['science_field2'].data != 0:
+            cur.execute("insert into project_science_field (project_id, field_id) values ({}, {})".format(cur.fetchone()[0], newProject['science_field2'].data))
+        db.connection.commit()
+        cur.close()
+        flash("Project added successfully", "success")
+        return render_template('add_project.html', form = projectform)
+
+    cur = db.connection.cursor()
+    cur.execute("select program_id, name from program order by name")
+    column_names = [i[0] for i in cur.description]
+    pr = [dict(zip(column_names, entry)) for entry in cur.fetchall()]
+    cur.execute("select organisation_id, name from organisation order by name")
+    column_names = [i[0] for i in cur.description]
+    org = [dict(zip(column_names, entry)) for entry in cur.fetchall()]
+    cur.execute("select r_id, concat(first_name, ' ', last_name) as name from researcher order by first_name")
+    column_names = [i[0] for i in cur.description]
+    rs = [dict(zip(column_names, entry)) for entry in cur.fetchall()]
+    cur.execute("select ex_id, name from executive order by name")
+    column_names = [i[0] for i in cur.description]
+    exs = [dict(zip(column_names, entry)) for entry in cur.fetchall()]
+    cur.execute("select field_id, name from science_field order by name")
+    column_names = [i[0] for i in cur.description]
+    sfs = [dict(zip(column_names, entry)) for entry in cur.fetchall()]
+    cur.close()
+    science_fields = [('0','-')] + [(s['field_id'], s['name']) for s in sfs]
+    programs = [('0','-')] + [(p.get('program_id'), p.get('name')) for p in pr]
+    organisations = [('0','-')] + [(o.get('organisation_id'), o.get('name')) for o in org]
+    researchers = [('0','-')] +[(r.get('r_id'), r.get('name')) for r in rs]
+    executives = [('0','-')] +[(e.get('ex_id'), e.get('name')) for e in exs]
+    projectform.science_field1.choices = projectform.science_field2.choices = science_fields
+    projectform.program.choices = programs
+    projectform.organisation.choices = organisations
+    projectform.evaluator.choices = researchers
+    projectform.executive.choices = executives
+    return render_template('add_project.html', form = projectform)

@@ -60,16 +60,29 @@
                             {% endif %}
                         </div> 
                     </div>
-                    <div class="form-group col-sm-6 mb-2">
-                        {{ form.amount.label(class = "form-label") }}
-                        {{ form.amount(class = "form-control", placeholder="Enter amount", required = False) }}
-                        {% if form.amount.errors %}
-                        <ul class = "errors">
-                            {% for error in form.amount.errors %}
-                            <li class = "text-danger">{{ error }}</li>
-                            {% endfor %}
-                        </ul>
-                        {% endif %}
+                    <div class="row">
+                        <div class="form-group col-sm-6 mb-2">
+                            {{ form.executive.label(class = "form-label") }}
+                            {{ form.executive(class = "form-control", placeholder="Enter amount", required = False) }}
+                            {% if form.executive.errors %}
+                            <ul class = "errors">
+                                {% for error in form.exective.errors %}
+                                <li class = "text-danger">{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                        </div>
+                        <div class="form-group col-sm-6 mb-2">
+                            {{ form.amount.label(class = "form-label") }}
+                            {{ form.amount(class = "form-control", placeholder="Enter amount", required = False) }}
+                            {% if form.amount.errors %}
+                            <ul class = "errors">
+                                {% for error in form.amount.errors %}
+                                <li class = "text-danger">{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                        </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-sm-6 mb-2">
@@ -96,11 +109,33 @@
                         </div>
                     </div>
                     <div class="form-group col mb-2">
-                        {{ form.program.label(class = "form-label") }}
-                        {{ form.program(class = "form-control", required = False) }}
-                        {% if form.program.errors %}
+                        {{ form.evaluator.label(class = "form-label") }}
+                        {{ form.evaluator(class = "form-control", required = False) }}
+                        {% if form.evaluator.errors %}
                         <ul class = "errors">
-                            {% for error in form.program.errors %}
+                            {% for error in form.evaluator.errors %}
+                            <li class = "text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                    <div class="form-group col mb-2">
+                        {{ form.science_field1.label(class = "form-label") }}
+                        {{ form.science_field1(class = "form-control", required = False) }}
+                        {% if form.science_field1.errors %}
+                        <ul class = "errors">
+                            {% for error in form.science_field1.errors %}
+                            <li class = "text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                    <div class="form-group col mb-2">
+                        {{ form.science_field2.label(class = "form-label") }}
+                        {{ form.science_field2(class = "form-control", required = False) }}
+                        {% if form.science_field2.errors %}
+                        <ul class = "errors">
+                            {% for error in form.science_field2.errors %}
                             <li class = "text-danger">{{ error }}</li>
                             {% endfor %}
                         </ul>
@@ -120,11 +155,29 @@
                         </ul>
                         {% endif %}
                     </div>
-
-                    <div class="form-group col-10 mb-2" id = "researchers">
-
-                    </div>
-                    <div id="add_button"></div>
+                    <div id = "res" hidden>
+                        <div class="form-group col-10 mb-2">
+                            {{ form.lead_researcher.label(class = "form-label") }}
+                        {{ form.lead_researcher(class = "form-control", required = False) }}
+                        {% if form.lead_researcher.errors %}
+                        <ul class = "errors">
+                            {% for error in form.lead_researcher.errors %}
+                            <li class = "text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        </div>
+                        <div class="form-group col-10 mb-2">
+                            {{ form.researchers.label(class = "form-label") }}
+                            {{ form.researchers(class = "form-control", required = False) }}
+                            {% if form.researchers.errors %}
+                         <ul class = "errors">
+                            {% for error in form.researchers.errors %}
+                            <li class = "text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        </div>
                     </div>
                 </div>
                 

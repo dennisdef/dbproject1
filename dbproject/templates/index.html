@@ -3,5 +3,31 @@
     {{pageTitle}}
 {% endblock title%}
 {% block content %}
-    {{test}}
+<div class="container">
+    <div class="row" id="row">
+        <div class="col-md-12">
+            <form class="form-horizontal" name="program-form" method="POST">
+                <!-- hidden_tag returns the form's security metadata -->
+                {{ form.hidden_tag() }}
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.start_date.label(class = "form-label") }}
+                    {{ form.start_date(class = "form-control", required = False) }}
+                </div>
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.end_date.label(class = "form-label") }}
+                    {{ form.end_date(class = "form-control", required = False) }}
+                </div>
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.length.label(class = "form-label") }}
+                    {{ form.length(class = "form-control", placeholder="Enter Address", required = False) }}
+                </div>
+                <div class="form-group col-sm-3 mb-3">
+                    {{ form.executive.label(class = "form-label") }}
+                    {{ form.executive(class = "form-control", placeholder="Enter Address", required = False) }}
+                </div>
+                {{ form.submit(class = "btn btn-danger btn-submit-custom") }}
+            </form>
+    </div>
+    </div>
+</div>
 {% endblock content %}

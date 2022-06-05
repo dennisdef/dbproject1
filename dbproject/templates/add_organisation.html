@@ -4,16 +4,18 @@
     Add Organisation
 {% endblock title %}
 
+{% block script%}
+<script src="{{ url_for('static', filename='dbproject/add_money_fields.js') }}"></script>
+{%endblock%}
 
 {% block content%}
 <div class="container">
-    {% include "flash_messages.html" %}
-    <div class="row" id="row">
-        <div class="col-md-12">
             <form class="form-horizontal" name="organisation-form" method="POST">
+                <div class="row">
+                    <div class="col-7">
                 <!-- hidden_tag returns the form's security metadata -->
-                {{ form.hidden_tag() }}
-                <div class="form-group col-sm-3 mb-3">
+                    {{ form.hidden_tag() }}
+                    <div class="form-group mb-2">
                     {{ form.name.label(class = "form-label") }}
                     <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
                     {{ form.name(class = "form-control", placeholder="Enter Name", required = False) }}
@@ -24,8 +26,8 @@
                         {% endfor %}
                     </ul>
                     {% endif %}
-                </div>
-                <div class="form-group col-sm-3 mb-3">
+                    </div>
+                    <div class="form-group mb-2">
                     {{ form.abbr.label(class = "form-label") }}
                     {{ form.abbr(class = "form-control", placeholder="Enter Abbreviation", required = False) }}
                     {% if form.abbr.errors %}
@@ -35,8 +37,8 @@
                         {% endfor %}
                     </ul>
                     {% endif %}
-                </div>
-                <div class="form-group col-sm-3 mb-3">
+                    </div>
+                    <div class="form-group mb-2">
                     {{ form.postal_code.label(class = "form-label") }}
                     {{ form.postal_code(class = "form-control", placeholder="Enter Postal Code", required = False) }}
                     {% if form.postal_code.errors %}
@@ -46,8 +48,8 @@
                         {% endfor %}
                     </ul>
                     {% endif %}
-                </div>
-                <div class="form-group col-sm-3 mb-3">
+                    </div>
+                <div class="form-group mb-2">
                     {{ form.street.label(class = "form-label") }}
                     {{ form.street(class = "form-control", placeholder="Enter Street", required = False) }}
                     {% if form.street.errors %}
@@ -58,7 +60,7 @@
                     </ul>
                     {% endif %}
                 </div>
-                <div class="form-group col-sm-3 mb-3">
+                <div class="form-group mb-2">
                     {{ form.city.label(class = "form-label") }}
                     {{ form.city(class = "form-control", placeholder="Enter City", required = False) }}
                     {% if form.city.errors %}
@@ -69,9 +71,9 @@
                     </ul>
                     {% endif %}
                 </div>
-                <div class="form-group col-sm-3 mb-3">
+                <div class="form-group mb-2">
                     {{ form.street_number.label(class = "form-label") }}
-                    {{ form.street_number(class = "form-control", placeholder="Enter Street Mumber", required = False) }}
+                    {{ form.street_number(class = "form-control", placeholder="Enter Street Number", required = False) }}
                     {% if form.street_number.errors %}
                     <ul class = "errors">
                         {% for error in form.street_number.errors %}
@@ -80,10 +82,84 @@
                     </ul>
                     {% endif %}
                 </div>
+                <div class="form-group mb-2">
+                    {{ form.phone.label(class = "form-label") }}
+                    {{ form.phone(class = "form-control", placeholder="Enter Phone", required = False) }}
+                    {% if form.phone.errors %}
+                    <ul class = "errors">
+                        {% for error in form.phone.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
                 {{ form.submit(class = "btn btn-danger btn-submit-custom") }}
+                </div>
+                <div class="col-5">
+                <div class="form-group mb-2">
+                    {{ form.type.label(class = "form-label") }}
+                    {{ form.type(class = "form-control", placeholder="Select Organisation Type", required = False) }}
+                    {% if form.type.errors %}
+                    <ul class = "errors">
+                        {% for error in form.type.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                
+                
+                <div class="form-group mb-2" id = "res1" hidden>
+                    {{ form.equity.label(class = "form-label") }}
+                    {{ form.equity(class = "form-control", placeholder="Select Equity", required = False) }}
+                    {% if form.equity.errors %}
+                    <ul class = "errors">
+                        {% for error in form.equity.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                </div>
+                <div class="form-group mb-2" id = res2 hidden>
+                    {{ form.budget_pa.label(class = "form-label") }}
+                    {{ form.budget_pa(class = "form-control", placeholder="Select Equity", required = False) }}
+                    {% if form.budget_pa.errors %}
+                    <ul class = "errors">
+                        {% for error in form.budget_pa.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div id = res3 hidden>
+                    <div class="form-group mb-2">
+                        {{ form.budget_me.label(class = "form-label") }}
+                        {{ form.budget_me(class = "form-control", placeholder="Select Equity", required = False) }}
+                        {% if form.budget_me.errors %}
+                        <ul class = "errors">
+                            {% for error in form.budget_me.errors %}
+                            <li class = "text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                    <div class="form-group mb-2">
+                        {{ form.budget_pa.label(class = "form-label") }}
+                        {{ form.budget_pa(class = "form-control", placeholder="Select Equity", required = False) }}
+                        {% if form.budget_pa.errors %}
+                        <ul class = "errors">
+                            {% for error in form.budget_pa.errors %}
+                            <li class = "text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            </div>
             </form>
     </div>
-    </div>
+    
 </div>
 
 {%endblock%}

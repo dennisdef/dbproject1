@@ -15,3 +15,13 @@ body{
 .linkStyle:hover{
     color: rgb(62, 61, 61);
 }
+
+.titles{
+    color:rgb(62, 61, 61);
+    text-decoration: none;
+}
+
+.titles:hover{
+    color:rgb(62, 61, 61);
+    text-decoration: none;
+}

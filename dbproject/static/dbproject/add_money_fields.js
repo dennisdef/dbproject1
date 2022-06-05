@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let t = 0;
     document.querySelector('#type').addEventListener('change', () => {
         if(t == 0){
-            times++;
+            t++;
             let value = document.querySelector('#type').value;
             if (value === 'Company'){
                 document.querySelector('#res1').hidden = false;

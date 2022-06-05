@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 
 {% block title %}
-    All Executives
+    All Programs
 {% endblock title %}
 
 
 {% block content%}
 <table class = "table table-striped table-hover">
     <tr>
-        <th>Executive Id</th>
-        <th>Executive Name</th>
+        <th>Program Id</th>
+        <th>Program Title</th>
         <th></th>
         <th></th>
     </tr>
@@ -19,8 +19,8 @@
         <td>
             {{r.name}}
         </td>
-        <td><a class="btn btn-outline-danger" href="{{ url_for('update_executive', id = r.id)}}">Update</a></td>
-        <td><a class="btn btn-outline-danger" href="{{ url_for('delete_executive', id = r.id)}}">Delete</a></td>
+        <td><a class="btn btn-outline-danger" href="{{ url_for('update_program', id = r.id)}}">Update</a></td>
+        <td><a class="btn btn-outline-danger" href="{{ url_for('delete_program', id = r.id)}}">Delete</a></td>
     </tr>
     {%endfor%}
 </table>

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}   
+    Projects
+{% endblock title %}
+
+{% block content %}
+<table class = "table table-striped table-hover">
+    <tr>
+        <th>Project Id</th>
+        <th>Project Title</th>
+    </tr>
+    {% for r in res %}
+    <tr>
+        <td>{{r.project_id}}</td>
+        <td>
+            <a class = "titles" href="{{ url_for('show_project', id = r.id)}}">{{r.title}}</a> 
+        </td>
+    </tr>
+    {%endfor%}
+</table>
+{% endblock content %}

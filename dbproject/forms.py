@@ -6,12 +6,6 @@ from wtforms import *
 from wtforms.validators import DataRequired, NumberRange
 from dbproject import db, app
 
-def validate_researchers(form, self, field):
-    if len(field.data) == 0:
-        raise ValidationError("At least one researcher is required")
-    if self.evaluator in field.data:
-        raise ValidationError("Evaluator cannot be a researcher")
-        
 ## when passed as a parameter to a template, an object of this class will be rendered as a regular HTML form
 ## with the additional restrictions specified for each field
 class ProjectForm(FlaskForm):
@@ -29,9 +23,9 @@ class ProjectForm(FlaskForm):
     organisation = SelectField('Organisation', coerce=int, choices=[], validate_choice=False, validators = [DataRequired(message = "Organisation is a required field.")])
     evaluator = SelectField('Evaluator', coerce=int, choices=[], validate_choice=False, validators = [DataRequired(message = "Evaluator is a required field.")])
     lead_researcher = SelectField('Lead Researcher', coerce=int, choices=[], validate_choice=False, validators = [DataRequired(message = "Lead Researcher is a required field.")])
-    researchers = SelectMultipleField('Researchers', coerce=int, choices=[], validate_choice=False, validators = [DataRequired(message = "Researchers is a required field."), validate_researchers])
+    researchers = SelectMultipleField('Researchers', coerce=int, choices=[], validate_choice=False, validators = [DataRequired(message = "Researchers is a required field.")])
     submit = SubmitField("Submit")
-
+            
     def validate_amount(form,field):
         d = decimal.Decimal(field.data)
         n = abs(d.as_tuple().exponent)
@@ -62,8 +56,17 @@ class OrganisationForm(FlaskForm):
     street = StringField(label = "Street", validators = [DataRequired(message = "Street is a required field.")])
     city = StringField(label = "City", validators = [DataRequired(message = "City is a required field.")])
     street_number = IntegerField(label= "Street Number", validators= [DataRequired(message = "Street Number is a required field.")])
-
+    phone = IntegerField(label = "Phone", validators = [DataRequired(message = "Phone is a required field.")])
+    type = SelectField(label = "Organisation Type", choices=['-', 'Company', 'University', 'Research Center', ])
+    equity = DecimalField(places = 2, label = "Equity", validators = [NumberRange(min = 100000, message = "Equity must be more than 100,000")])
+    budget_pa = DecimalField(places = 2, label = "Budget", validators = [NumberRange(min = 100000,  max = 1000000, message = "Equity must be more than 100,000")])
+    budget_me = DecimalField(places = 2, label = "Budget", validators = [NumberRange(min = 100000,  max = 1000000, message = "Equity must be more than 100,000")])
+    
     submit = SubmitField("Submit")
+
+    def validate_type(form, self):
+        if self.type == "-":
+            raise ValidationError("Select Organisation Type")
 
 class ExecutiveForm(FlaskForm):
     name = StringField(label = "Name", validators = [DataRequired(message = "Name is a required field.")])
@@ -73,15 +76,30 @@ class ExecutiveForm(FlaskForm):
 class ResearcherForm(FlaskForm):
     first_name = StringField(label = "First Name", validators = [DataRequired(message = "First Name is a required field.")])
     last_name = StringField(label = "Last Name", validators = [DataRequired(message = "Last Name is a required field.")])
-    birth_date = IntegerField(label = "Birth Date", validators = [DataRequired(message = "Birth Date is a required field.")])
+    birth_date = DateField(label = "Birth Date", validators = [DataRequired(message = "Birth Date is a required field.")])
     sex = StringField(label = "Sex", validators = [DataRequired(message = "Sex is a required field.")])
     start_date = DateField(label = "Start Date", default = date.today())
     organisation = SelectField(label = "Organisation", choices=[], validate_choice=False)
-    
+
     submit = SubmitField("Submit")
 
 class ProgramForm(FlaskForm):
     name = StringField(label = "Name", validators = [DataRequired(message = "Name is a required field.")])
     address = StringField(label = "Address", validators = [DataRequired(message = "Address is a required field.")])
 
+    submit = SubmitField("Submit")
+
+
+class SearchProjectForm(FlaskForm):
+    start_date = DateField(label = "Start Date After:")
+    end_date = DateField(label = "End Date After:")
+    length = SelectField(label = "Length", choices=[('0','-'), ('1','1'),('2','2'),('3','3'), ('4','4')])
+    executive = SelectField(label = "Executive", choices=[])
+    submit = SubmitField("Submit")
+
+class DeliverableForm(FlaskForm):
+    title = StringField(label = "Title", validators = [DataRequired(message = "Title is a required field.")])
+    summary = StringField(label = "Summary", validators = [DataRequired(message = "Summary is a required field.")])
+    delivery_date = DateField(label = "Start Date", default = date.today())
+    executive = SearchField(label = "Executive", choices=[])
     submit = SubmitField("Submit")

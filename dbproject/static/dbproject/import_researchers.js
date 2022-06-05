@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', function () {
     let times = 0;
     let organisation = 0;
     document.querySelector('#organisation').addEventListener('change', () => add_fields()); 
-    
     function add_fields(){
             if(times == 0){
                 times++;
@@ -11,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 fetch(url)
                     .then(response => response.json())
                     .then(data => {
-                        select = document.querySelector('#lead_researcher');
+                        const select = document.querySelector('#lead_researcher');
                         document.querySelector('#res').hidden = false;
                         data.forEach(function (researcher) {
                             var option = document.createElement('option');

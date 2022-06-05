@@ -6,6 +6,12 @@ from wtforms import *
 from wtforms.validators import DataRequired, NumberRange
 from dbproject import db, app
 
+def validate_researchers(form, self, field):
+    if len(field.data) == 0:
+        raise ValidationError("At least one researcher is required")
+    if self.evaluator in field.data:
+        raise ValidationError("Evaluator cannot be a researcher")
+        
 ## when passed as a parameter to a template, an object of this class will be rendered as a regular HTML form
 ## with the additional restrictions specified for each field
 class ProjectForm(FlaskForm):
@@ -23,7 +29,7 @@ class ProjectForm(FlaskForm):
     organisation = SelectField('Organisation', coerce=int, choices=[], validate_choice=False, validators = [DataRequired(message = "Organisation is a required field.")])
     evaluator = SelectField('Evaluator', coerce=int, choices=[], validate_choice=False, validators = [DataRequired(message = "Evaluator is a required field.")])
     lead_researcher = SelectField('Lead Researcher', coerce=int, choices=[], validate_choice=False, validators = [DataRequired(message = "Lead Researcher is a required field.")])
-    researchers = SelectMultipleField('Researchers', coerce=int, choices=[], validate_choice=False, validators = [DataRequired(message = "Researchers is a required field.")])
+    researchers = SelectMultipleField('Researchers', coerce=int, choices=[], validate_choice=False, validators = [DataRequired(message = "Researchers is a required field."), validate_researchers])
     submit = SubmitField("Submit")
 
     def validate_amount(form,field):
@@ -47,7 +53,6 @@ class ProjectForm(FlaskForm):
             raise ValidationError("Evaluation date must be before end date")
         if self.end_date.data - self.start_date.data < 365 or self.end_date.data - self.start_date.data > 365*4:
             raise ValidationError("Project must be between 1 and 4 years")
-    
 
 
 class OrganisationForm(FlaskForm):

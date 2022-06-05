@@ -4,6 +4,9 @@
     Add Project
 {% endblock title %}
 
+{% block script%}
+<script src="{{ url_for('static', filename='dbproject/import_researchers.js') }}"></script>
+{%endblock%}
 
 {% block content%}
 <div class="container">
@@ -66,7 +69,7 @@
                             {{ form.executive(class = "form-control", placeholder="Enter amount", required = False) }}
                             {% if form.executive.errors %}
                             <ul class = "errors">
-                                {% for error in form.exective.errors %}
+                                {% for error in form.executive.errors %}
                                 <li class = "text-danger">{{ error }}</li>
                                 {% endfor %}
                             </ul>
@@ -170,15 +173,15 @@
                         <div class="form-group col-10 mb-2">
                             {{ form.researchers.label(class = "form-label") }}
                             {{ form.researchers(class = "form-control", required = False) }}
-                            {% if form.researchers.errors %}
+                        </div>
+                    </div>
+                    {% if form.researchers.errors %}
                          <ul class = "errors">
                             {% for error in form.researchers.errors %}
                             <li class = "text-danger">{{ error }}</li>
                             {% endfor %}
                         </ul>
                         {% endif %}
-                        </div>
-                    </div>
                 </div>
                 
             </div>

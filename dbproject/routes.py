@@ -29,12 +29,12 @@ def add():
 @app.route("/add_project", methods = ["GET", "POST"])
 def add_project():
     projectform = ProjectForm()
-    if(request.method == "POST" ):##and projectform.validate_on_submit()):
+    if(request.method == "POST" and projectform.validate_on_submit()):
         newProject = projectform.__dict__
         researchers = [int(i) for i in request.form.getlist('researchers')]
         evaluator =  newProject['evaluator'].data
         if evaluator in researchers:
-            flash("Evaluator cannot be a researcher in the project", "danger")
+            #flash("Evaluator cannot be a researcher in the project", "danger")
             return render_template('add_project.html', projectform=projectform)
         query = "INSERT INTO project (title, summary, start_date, end_date, amount, grade, evaluation_date, evaluator_id, ex_id, program_id, organisation_id, r_id) values ('{}', '{}', '{}', '{}', {}, {}, '{}', {}, {}, {}, {}, {})".format(
          newProject['title'].data, newProject['summary'].data, newProject['start_date'].data, newProject['end_date'].data, newProject['amount'].data, newProject['grade'].data, 
@@ -298,7 +298,7 @@ def update_researcher(id):
         return redirect(url_for("show_all_researchers"))
         
     cur = db.connection.cursor()
-    cur.execute("select * from researcher where r_id = {}".format(r_id))
+    cur.execute("select * from researcher where r_id = {}".format(id))
     column_names = [i[0] for i in cur.description]
     res = dict(zip(column_names, cur.fetchone()))
     cur.close()
@@ -312,4 +312,4 @@ def update_researcher(id):
     org = [dict(zip(column_names, entry)) for entry in cur.fetchall()]
     organisations = [('0','-')] + [(o.get('organisation_id'), o.get('name')) for o in org]
     ResearcherForm.organisation_id.choices = organisations
-    return render_template("add_researcher.html", form=ResearcherForm, r_id=r_id, o_id = res.get("organisation_id"))
+    return render_template("add_researcher.html", form=ResearcherForm, r_id=id, o_id = res.get("organisation_id"))

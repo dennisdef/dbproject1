@@ -11,6 +11,21 @@
 {% block content%}
 <div class="container">
             <form class="form-horizontal" name="organisation-form" method="POST">
+                {% if phone %}
+                    <input type="hidden" name = "phone" value = {{phone}}>
+                {% endif %}
+                {% if phone2 %}
+                    <input type="hidden" name = "phone2" value = {{phone2}}>
+                {% endif %}
+                {% if phone3 %}
+                    <input type="hidden" name = "phone3" value = {{phone3}}>
+                {% endif %}
+                {% if phone4 %}
+                    <input type="hidden" name = "phone4" value = {{phone4}}>
+                {% endif %}
+                {% if phone5 %}
+                    <input type="hidden" name = "phone5" value = {{phone5}}>
+                {% endif %}
                 <div class="row">
                     <div class="col-7">
                 <!-- hidden_tag returns the form's security metadata -->
@@ -61,17 +76,6 @@
                     {% endif %}
                 </div>
                 <div class="form-group mb-2">
-                    {{ form.city.label(class = "form-label") }}
-                    {{ form.city(class = "form-control", placeholder="Enter City", required = False) }}
-                    {% if form.city.errors %}
-                    <ul class = "errors">
-                        {% for error in form.city.errors %}
-                        <li class = "text-danger">{{ error }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
-                </div>
-                <div class="form-group mb-2">
                     {{ form.street_number.label(class = "form-label") }}
                     {{ form.street_number(class = "form-control", placeholder="Enter Street Number", required = False) }}
                     {% if form.street_number.errors %}
@@ -83,11 +87,66 @@
                     {% endif %}
                 </div>
                 <div class="form-group mb-2">
+                    {{ form.city.label(class = "form-label") }}
+                    {{ form.city(class = "form-control", placeholder="Enter City", required = False) }}
+                    {% if form.city.errors %}
+                    <ul class = "errors">
+                        {% for error in form.city.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group mb-2">
                     {{ form.phone.label(class = "form-label") }}
                     {{ form.phone(class = "form-control", placeholder="Enter Phone", required = False) }}
                     {% if form.phone.errors %}
                     <ul class = "errors">
                         {% for error in form.phone.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group mb-2">
+                    {{ form.phone2.label(class = "form-label") }}
+                    {{ form.phone2(class = "form-control", placeholder="Enter Phone 2", required = False) }}
+                    {% if form.phone2.errors %}
+                    <ul class = "errors">
+                        {% for error in form.phone2.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group mb-2" id = phone3>
+                    {{ form.phone3.label(class = "form-label") }}
+                    {{ form.phone3(class = "form-control", placeholder="Enter Phone 3", required = False) }}
+                    {% if form.phone3.errors %}
+                    <ul class = "errors">
+                        {% for error in form.phone3.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group mb-2" id = phone4>
+                    {{ form.phone4.label(class = "form-label") }}
+                    {{ form.phone4(class = "form-control", placeholder="Enter Phone 4", required = False) }}
+                    {% if form.phone4.errors %}
+                    <ul class = "errors">
+                        {% for error in form.phone4.errors %}
+                        <li class = "text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group mb-2" id = phone5>
+                    {{ form.phone5.label(class = "form-label") }}
+                    {{ form.phone5(class = "form-control", placeholder="Enter Phone 5", required = False) }}
+                    {% if form.phone5.errors %}
+                    <ul class = "errors">
+                        {% for error in form.phone5.errors %}
                         <li class = "text-danger">{{ error }}</li>
                         {% endfor %}
                     </ul>
@@ -121,11 +180,11 @@
                 {% endif %}
                 </div>
                 <div class="form-group mb-2" id = res2 hidden>
-                    {{ form.budget_pa.label(class = "form-label") }}
-                    {{ form.budget_pa(class = "form-control", placeholder="Select Equity", required = False) }}
-                    {% if form.budget_pa.errors %}
+                    {{ form.budget_me.label(class = "form-label") }}
+                    {{ form.budget_me(class = "form-control", placeholder="Select Budget ME", required = False) }}
+                    {% if form.budget_me.errors %}
                     <ul class = "errors">
-                        {% for error in form.budget_pa.errors %}
+                        {% for error in form.budget_me.errors %}
                         <li class = "text-danger">{{ error }}</li>
                         {% endfor %}
                     </ul>
@@ -134,7 +193,7 @@
                 <div id = res3 hidden>
                     <div class="form-group mb-2">
                         {{ form.budget_me.label(class = "form-label") }}
-                        {{ form.budget_me(class = "form-control", placeholder="Select Equity", required = False) }}
+                        {{ form.budget_me(class = "form-control", placeholder="Select Budget ME", required = False) }}
                         {% if form.budget_me.errors %}
                         <ul class = "errors">
                             {% for error in form.budget_me.errors %}
@@ -145,7 +204,7 @@
                     </div>
                     <div class="form-group mb-2">
                         {{ form.budget_pa.label(class = "form-label") }}
-                        {{ form.budget_pa(class = "form-control", placeholder="Select Equity", required = False) }}
+                        {{ form.budget_pa(class = "form-control", placeholder="Enter Budget PA", required = False) }}
                         {% if form.budget_pa.errors %}
                         <ul class = "errors">
                             {% for error in form.budget_pa.errors %}

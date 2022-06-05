@@ -19,18 +19,18 @@
                 <div class = "col"><h1 class ="text-center title">ELIDEK</h1></div>
             </div>
             <div>
-                <a class="btn btn-danger btn-lg" href="{{ url_for('index') }}">Home</a>
-                <a class="btn btn-outline-danger btn-lg" href="{{ url_for('science_fields') }}">Show Research Fields</a>
-                <a class="btn btn-outline-danger btn-lg" href="{{ url_for('statistics') }}">Statistics</a>
-                <a class="btn btn-outline-danger btn-lg" href="{{ url_for('show_all_researchers') }}">Show all Researchers</a>
-                <a class="btn btn-outline-danger btn-lg" href="{{ url_for('show_all_organisations') }}">Show all Organisations</a>
-                <a class="btn btn-outline-danger btn-lg" href="{{ url_for('show_all_executives') }}">Show all Executives</a>
-                <a class="btn btn-outline-danger btn-lg" href="{{ url_for('show_all_programs') }}">Show all Programs</a>
-                <a class="btn btn-outline-danger btn-lg" href="{{ url_for('add') }}">+ Add</a>
+                <a class="btn base btn-danger btn-lg" href="{{ url_for('index') }}">Home</a>
+                <a class="btn base btn-outline-danger btn-lg" href="{{ url_for('science_fields') }}">Show Research Fields</a>
+                <a class="btn base btn-outline-danger btn-lg" href="{{ url_for('statistics') }}">Statistics</a>
+                <a class="btn base btn-outline-danger btn-lg" href="{{ url_for('show_all_researchers') }}">Show all Researchers</a>
+                <a class="btn base btn-outline-danger btn-lg" href="{{ url_for('show_all_organisations') }}">Show all Organisations</a>
+                <a class="btn base btn-outline-danger btn-lg" href="{{ url_for('show_all_executives') }}">Show all Executives</a>
+                <a class="btn base btn-outline-danger btn-lg" href="{{ url_for('show_all_programs') }}">Show all Programs</a>
+                <a class="btn base btn-outline-danger btn-lg" href="{{ url_for('add') }}">+ Add</a>
 
             </div>
     </div>
-    <div class="container mt-3">
+    <div class="container mt-4">
         {% include "flash_messages.html" %}
         {% block content %}
         {% endblock content %}

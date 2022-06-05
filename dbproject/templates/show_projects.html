@@ -13,7 +13,7 @@
     <tr>
         <td>{{r.project_id}}</td>
         <td>
-            <a class = "titles" href="{{ url_for('show_project', id = r.id)}}">{{r.title}}</a> 
+            <a class = "titles" href="{{ url_for('show_project', id = r.project_id)}}">{{r.title}}</a> 
         </td>
     </tr>
     {%endfor%}

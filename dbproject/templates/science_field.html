@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{pageTitle}}
+{% endblock title %}
+
+{% block content %}
+    <div class="row">
+        <h1>{{pageTitle}}</h1>
+    </div>
+    <div class ='row mt-5'>
+        <div class = 'col col-6'>
+            <div >
+                <h5>Έργα σε αυτόν τον τομέα</h5>
+            </div>
+            <ul>
+                {% for r in res %}
+                <li>{{r.project}}</li>
+                {%endfor%}
+            </ul>
+        </div>    
+        <div class = 'col col-6'>
+            <div >
+                <h5>Ερευνητές σε αυτόν τον τομέα</h5>
+            </div>
+            <ul>
+                {% for r in res1 %}
+                <li>{{r.researcher}}</li>
+                {%endfor%}
+            </ul>
+        </div>
+    </div>
+{% endblock content %}

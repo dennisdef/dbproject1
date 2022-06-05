@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block title %}   
+    {{pageTitle}}
+{% endblock title %}
+
+    
+{% block content %}
+    
+    <h3>{{res.title.capitalize()}}</h3>
+    
+    <div class="row justify-content-between mt-5">
+        <div class="col col-10">
+            <div class ="row">
+                <div class="program col col-1 me-5">Πρόγραμμα:
+                </div>  
+                <div class = "col-2" style="font-size: large;">
+                {{res.program}}
+                </div>  
+            </div>
+        </div>
+        <div class="col col-2">
+            <a class="btn btn-danger" href="{{ url_for('show_deliverables', id = res.project_id )}}">Show Deliverables</a> 
+        </div>       
+    </div>
+
+    <div class="row mt-5">
+        <h5>Περίληψη:</h5>
+    </div>
+    <div class="col mt-3">
+        <p>{{res.summary}}</p>
+    </div>
+    
+    <div class="row my-5 dates">
+        <div class="col col-2">
+            Έναρξη έργου: {{res.start_date.strftime("%d/%m/%Y")}}
+        </div>
+        <div class="col col-2"> 
+            Λήξη έργου: {{res.end_date.strftime("%d/%m/%Y")}}
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <h5>Αξιολόγηση:</h5>
+    </div>
+    <div class="row">
+        <div class="col col-3">
+            Αξιολογητής: &nbsp; {{res.evaluator}}
+        </div>
+        <div class="col col-2">
+            Βαθμός: &nbsp; {{res.grade}}
+        </div>
+        <div class="col col-3">
+            Ημερομηνία Αξιολόγησης: &nbsp; {{res.evaluation_date.strftime("%d/%m/%Y")}}
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <h5>Χρηματοδότηση:</h5>
+    </div>
+    <div class="row">
+        <div class="col col-3">
+            Στέλεχος: &nbsp; {{res.executive}}
+        </div>
+        <div class="col col-2">
+            Ποσό: &nbsp; {{res.amount}}
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class = "col col-3 program">Επιστημονικός Υπεύθυνος:</div>
+        <div class = "col col-3">
+            {%for r in researchers%}
+                {% if r.r_id == res.r_id%}
+                    {{r.name}}
+                {%endif%}
+            {%endfor%}
+        </div>
+    </div>
+    <div class="row mt-5">
+        <table class = "table table-striped table-hover">
+            <tr>
+                <th>Ερευνητές που δουλεύουν στο έργο</th>
+            </tr>
+            {% for r in researchers %}
+            <tr>
+            <td>{{r.name}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    
+    
+
+{% endblock content %}

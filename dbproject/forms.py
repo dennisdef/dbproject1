@@ -57,10 +57,14 @@ class OrganisationForm(FlaskForm):
     city = StringField(label = "City", validators = [DataRequired(message = "City is a required field.")])
     street_number = IntegerField(label= "Street Number", validators= [DataRequired(message = "Street Number is a required field.")])
     phone = IntegerField(label = "Phone", validators = [DataRequired(message = "Phone is a required field.")])
+    phone2 = IntegerField(label = "Phone 2", validators = [])
+    phone3 = IntegerField(label = "Phone 3", validators = [])
+    phone4 = IntegerField(label = "Phone 4", validators = [])
+    phone5 = IntegerField(label = "Phone 5", validators = [])
     type = SelectField(label = "Organisation Type", choices=['-', 'Company', 'University', 'Research Center', ])
     equity = DecimalField(places = 2, label = "Equity", validators = [NumberRange(min = 100000, message = "Equity must be more than 100,000")])
-    budget_pa = DecimalField(places = 2, label = "Budget", validators = [NumberRange(min = 100000,  max = 1000000, message = "Equity must be more than 100,000")])
-    budget_me = DecimalField(places = 2, label = "Budget", validators = [NumberRange(min = 100000,  max = 1000000, message = "Equity must be more than 100,000")])
+    budget_pa = DecimalField(places = 2, label = "Budget", validators = [NumberRange(min = 100000, message = "Budget must be more than 100,000")])
+    budget_me = DecimalField(places = 2, label = "Budget", validators = [NumberRange(min = 100000, message = "Budget must be more than 100,000")])
     
     submit = SubmitField("Submit")
 
@@ -92,14 +96,13 @@ class ProgramForm(FlaskForm):
 
 class SearchProjectForm(FlaskForm):
     start_date = DateField(label = "Start Date After:")
-    end_date = DateField(label = "End Date After:")
+    end_date = DateField(label = "End Date Before:")
     length = SelectField(label = "Length", choices=[('0','-'), ('1','1'),('2','2'),('3','3'), ('4','4')])
     executive = SelectField(label = "Executive", choices=[])
     submit = SubmitField("Submit")
 
 class DeliverableForm(FlaskForm):
     title = StringField(label = "Title", validators = [DataRequired(message = "Title is a required field.")])
-    summary = StringField(label = "Summary", validators = [DataRequired(message = "Summary is a required field.")])
-    delivery_date = DateField(label = "Start Date", default = date.today())
-    executive = SearchField(label = "Executive", choices=[])
+    summary = TextAreaField(label = "Summary", validators = [DataRequired(message = "Summary is a required field.")])
+    delivery_date = DateField(label = "Delivery Date", default = date.today())
     submit = SubmitField("Submit")

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}   
+    Deliverables
+{% endblock title %}
+
+{% block content %}
+<div class = "row">
+    <div class="col col-10">
+        {% if res%}
+        <table class = "table table-striped table-hover">
+            <tr>
+                <th>Deliverable Id</th>
+                <th>Deliverable Title</th>
+                <th></th>
+                <th></th>
+            </tr>
+            {% for r in res %}
+            <tr>
+                <td>{{r.d_id}}</td>
+                <td>
+                    {{r.title}}
+                </td>
+                <td><a class="btn btn-outline-danger" href="{{ url_for('update_deliverable', project_id = project_id, id = r.d_id)}}">Update</a></td>
+                <td><a class="btn btn-outline-danger" href="{{ url_for('delete_deliverable', project_id = project_id, id = r.d_id)}}">Delete</a></td>
+            </tr>
+            {%endfor%}
+        </table>
+    {% else %}
+        <h3>No deliverables found</h3>
+    {% endif %}
+    </div>
+    <div class="col col-2">
+        {% if point = 1 %}
+        <a class="btn btn-outline-danger" href="{{ url_for('add_deliverable', id = project_id) }}" disable>Add Deliverable</a>
+        {% else %}
+        <a class="btn btn-outline-danger" href="{{ url_for('add_deliverable', id = project_id) }}">Add Deliverable</a>
+        {% endif %}
+    </div>
+</div>
+    
+{% endblock content %}
